@@ -1,0 +1,6 @@
+all:
+  hosts:
+    local:
+      ansible_host: 192.168.0.25
+  local_group:
+    local:

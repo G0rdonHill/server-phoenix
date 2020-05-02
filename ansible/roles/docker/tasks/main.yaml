@@ -1,0 +1,15 @@
+---
+- name: Update apt
+  apt:
+    update_cache: yes
+
+- name: Install dependencies
+  apt:
+    name: "{{item}}"
+    state: latest
+  with_items:
+    - apt-transport
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
