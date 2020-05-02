@@ -1,0 +1,7 @@
+---
+- name: Install Docker snap
+  snap:
+    name: docker
+    state: present
+
+- include: postinstall.yaml

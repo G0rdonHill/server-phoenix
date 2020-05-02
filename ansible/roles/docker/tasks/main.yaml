@@ -1,15 +1,6 @@
 ---
-- name: Update apt
-  apt:
-    update_cache: yes
+- include: ubuntu18.yaml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'bionic'
 
-- name: Install dependencies
-  apt:
-    name: "{{item}}"
-    state: latest
-  with_items:
-    - apt-transport
-    - ca-certificates
-    - curl
-    - gnupg-agent
-    - software-properties-common
+- include: ubuntu20.yaml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'focal'
