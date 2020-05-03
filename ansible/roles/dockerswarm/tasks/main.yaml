@@ -1,0 +1,17 @@
+---
+- name: Install pip packages used by swarm/stack
+  pip:
+    name: 
+      - docker
+      - jsondiff
+
+
+- name: Init a new swarm with default parameters
+  docker_swarm:
+    state: present
+
+- name: Create Directories for docker stacks
+  file:
+    path: "{{ docker_stack_dir }}"
+    state: directory
+    mode: 0755

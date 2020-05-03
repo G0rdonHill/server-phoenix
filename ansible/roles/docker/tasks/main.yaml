@@ -4,3 +4,9 @@
 
 - include: ubuntu20.yaml
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'focal'
+
+- debug:
+    msg: "Ansible using python interpreter {{ ansible_python_interpreter }}"
+
+
+

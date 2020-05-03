@@ -8,7 +8,7 @@
   user:
     append: yes
     groups: docker
-    name: "{{ lookup('env','USER') }}"
+    name: "{{ ansible_user_id }}"
 
 - debug:
     msg: Restart system for group changes to take affect

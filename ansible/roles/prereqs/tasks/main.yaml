@@ -1,0 +1,6 @@
+---
+- name: Install pre-requisite packages
+  apt:
+    name: "{{ prereq_pkgs }}"
+    state: present
+    update_cache: yes
