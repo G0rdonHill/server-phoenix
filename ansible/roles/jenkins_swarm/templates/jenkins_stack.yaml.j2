@@ -1,0 +1,33 @@
+# stack for for jenkins via traefik
+version: '3.2'
+
+networks:
+  proxy:
+    external: true
+services:
+  jenkins:
+    image: jenkins/jenkins:{{jenkins_img_tag}}
+    networks:
+      - proxy
+    volumes:
+      - jenkins:/var/jenkins_home
+    deploy:
+      labels: # service labels MUST be in the deploy section
+        - traefik.enable=true
+        # https with le
+        - traefik.http.routers.jenkins.rule=Host(`{{jenkins_url}}`)
+        - traefik.http.routers.jenkins.entrypoints=websecure
+        - traefik.http.routers.jenkins.tls={{jenkins_tls}}
+        - traefik.http.routers.jenkins.tls.certresolver={{jenkins_certresolver}}
+        - traefik.http.services.jenkins.loadbalancer.server.port=8080
+#  worker:
+#    image: csanchez/jenkins-swarm-slave
+#    command: -username {{jenkins_user}} -password '{{jenkins_password}}' -executors 1
+#    networks:
+#      - proxy
+#    environment:
+#      - "JENKINS_PORT_8080_TCP_ADDR=jenkins"
+#      - "JENKINS_PORT_8080_TCP_PORT=8080"
+volumes:
+  jenkins:
+

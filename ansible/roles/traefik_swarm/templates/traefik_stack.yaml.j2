@@ -3,7 +3,7 @@ version: "3"
 
 services:
   traefik:
-    image: "traefik:{{traefik_img_tag}}"
+    image: traefik:{{traefik_img_tag}}
     command:
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
@@ -13,18 +13,18 @@ services:
       # auto ssl certs
       # staging
       - --certificatesresolvers.staging.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
-      - "--certificatesresolvers.staging.acme.email={{lets_encrypt_email}}"
+      - --certificatesresolvers.staging.acme.email={{lets_encrypt_email}}
       - --certificatesresolvers.staging.acme.storage=/letsencrypt/acme-staging.json
       - --certificatesresolvers.staging.acme.httpchallenge=true
       - --certificatesresolvers.staging.acme.httpchallenge.entrypoint=web
       # real
       - --certificatesresolvers.le.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
-      - "--certificatesresolvers.le.acme.email={{lets_encrypt_email}}"
+      - --certificatesresolvers.le.acme.email={{lets_encrypt_email}}
       - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.le.acme.httpchallenge=true
       - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
       # dashboard
-      - "--api.insecure={{traefik_api_insecure}}"
+      - --api.insecure={{traefik_api_insecure}}
       # debugging
       - --log.level=DEBUG
     ports:
