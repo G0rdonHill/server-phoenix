@@ -1,0 +1,8 @@
+---
+- hosts: blue
+  become: true
+  roles:
+    - prereqs
+    - docker
+    - dockerswarm
+    - portainer_swarm 
