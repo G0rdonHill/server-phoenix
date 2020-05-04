@@ -1,0 +1,54 @@
+# traefik2 with lets encrypt
+version: "3"
+
+services:
+  traefik:
+    image: "traefik:{{traefik_img_tag}}"
+    command:
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --providers.docker=true
+      - --providers.docker.swarmmode
+      - --providers.docker.exposedbydefault=false
+      # auto ssl certs
+      # staging
+      - --certificatesresolvers.staging.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      - "--certificatesresolvers.staging.acme.email={{lets_encrypt_email}}"
+      - --certificatesresolvers.staging.acme.storage=/letsencrypt/acme-staging.json
+      - --certificatesresolvers.staging.acme.httpchallenge=true
+      - --certificatesresolvers.staging.acme.httpchallenge.entrypoint=web
+      # real
+      - --certificatesresolvers.le.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+      - "--certificatesresolvers.le.acme.email={{lets_encrypt_email}}"
+      - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.le.acme.httpchallenge=true
+      - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
+      # dashboard
+      - "--api.insecure={{traefik_api_insecure}}"
+      # debugging
+      - --log.level=DEBUG
+    ports:
+      - 80:80
+      - 443:443
+      - {{traefik_dashboard_port}}:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - letsencrypt:/letsencrypt
+    networks:
+      - proxy
+    deploy:
+      replicas: 1
+#     labels:
+#       - traefik.enable=true
+#       - traefik.http.routers.tohttps.rule=hostregexp(`{host:.+}`)
+#       - traefik.http.routers.tohttps.entrypoints=web
+#       - traefik.http.routers.tohttps.middlewares=redirect-to-https@docker
+#       - traefik.http.routers.fromhttp.rule=hostregexp(`{host:.+}`)
+#       - traefik.http.routers.fromhttp.tls
+#       - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+
+networks:
+  proxy:
+    external: true
+volumes:
+  letsencrypt:
