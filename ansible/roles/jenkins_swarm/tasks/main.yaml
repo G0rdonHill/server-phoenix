@@ -1,0 +1,13 @@
+- name: Add Jenkins stack template
+  template:
+    src: jenkins_stack.yaml.j2
+    dest: "{{ docker_stack_dir }}/jenkins_stack.yaml"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid }}"
+
+- name: Spin up docker stack
+  docker_stack:
+    state: present
+    name: jenkins
+    compose:
+      - "{{ docker_stack_dir }}/jenkins_stack.yaml"

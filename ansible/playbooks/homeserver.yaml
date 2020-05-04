@@ -5,4 +5,6 @@
     - prereqs
     - docker
     - dockerswarm
-    - portainer_swarm 
+    - portainer_swarm
+    - traefik_swarm
+    - jenkins_swarm
