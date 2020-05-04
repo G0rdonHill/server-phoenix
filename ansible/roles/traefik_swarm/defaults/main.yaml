@@ -1,0 +1,6 @@
+---
+docker_stack_dir: /opt/dockerswarm/stacks
+traefik_img_tag: v2.2
+lets_encrypt_email: gordonhill10@hotmail.com
+traefik_api_insecure: true
+traefik_dashboard_port: 8080

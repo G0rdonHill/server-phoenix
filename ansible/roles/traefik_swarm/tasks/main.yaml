@@ -1,0 +1,20 @@
+---
+- name: Create Proxy Network
+  docker_network:
+    name: proxy
+    internal: no
+    driver: overlay
+
+- name: Add Traefik stack template
+  template:
+    src: traefik_stack.yaml.j2
+    dest: "{{ docker_stack_dir }}/traefik_stack.yaml"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid }}"
+
+- name: Spin up docker stack
+  docker_stack:
+    state: present
+    name: traefik
+    compose:
+      - "{{ docker_stack_dir }}/traefik_stack.yaml"
