@@ -2,6 +2,8 @@ all:
   hosts:
     blue:
       ansible_host: 192.168.0.25
+    gcp_test:
+      ansible_host: 35.193.154.225
 home_group:
   hosts:
     blue:
