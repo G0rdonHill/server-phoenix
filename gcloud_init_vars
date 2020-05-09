@@ -1,0 +1,7 @@
+#Var
+prefix=gh-test
+project_name=$prefix-project-1
+sa_name=$prefix-sa-1
+sa_desc="Service account for $project_name"
+sa_disp_name="$sa_name"
+out_file=./${sa_name}-key.json

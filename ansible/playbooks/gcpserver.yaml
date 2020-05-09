@@ -7,5 +7,6 @@
     - dockerswarm
     - portainer_swarm
     - traefik_swarm
-    - jenkins_swarm
-
+    - role: jenkins_swarm
+      vars:
+        jenkins_url: jenkins.35.193.154.225.nip.io

@@ -12,3 +12,5 @@
     name: portainer
     compose:
       - "{{ docker_stack_dir }}/portainer_stack.yaml"
+
+# Does not work on 20.04 - cannot find file although stack is there
