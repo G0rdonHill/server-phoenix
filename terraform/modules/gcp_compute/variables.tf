@@ -24,17 +24,9 @@ variable "node_count" {
   
 }
 
-variable "project" {
+variable "vm_size" {
   type = string
-  description = "GCP Project ID"
-  default = "gh-test-project-1-276520"
-  
-}
-
-variable "credentials" {
-  type = string
-  description="File location for SA Key"
-  default="./gh-test-sa-1-key.json"
+  description = "GCP Compute instance size"  
 }
 
 variable "os" {
@@ -48,20 +40,6 @@ variable "disk_size" {
   type = string
   description = "Size in GB of VM data disks."
   default = "20"
-}
-
-variable "region" {
-  type = string
-  description = "Region for the GCP resources"
-  default = "us-central1"
-
-}
-
-variable "zone" {
-  type = string
-  description = "Zone for the GCP resources"
-  default = "us-central1-c"
-
 }
 
 variable "tags" {

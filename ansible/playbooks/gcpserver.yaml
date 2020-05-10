@@ -9,4 +9,4 @@
     - traefik_swarm
     - role: jenkins_swarm
       vars:
-        jenkins_url: jenkins.35.193.154.225.nip.io
+        jenkins_url: jenkins.34.69.158.223.nip.io

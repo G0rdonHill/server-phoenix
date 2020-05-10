@@ -72,3 +72,8 @@ Running the ansible scripts on and ubuntu 20.04 image fails at deploying portain
 Have not looked into this properly - but the error states docker_stack cannot find the portainer stack file.
 
 The same playbook task runs on ubuntu 18.04 images. The only other difference is how docker is installed (apt on 18.04, snap on 20.04)
+
+
+## Micro instance
+
+The free GCP compute vm type cannot really cope with swarm/services all running. This type has been chosen as it is free and tests the ansibe playbook on a remote host
