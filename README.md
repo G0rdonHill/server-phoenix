@@ -55,6 +55,11 @@ User has installed Ansible (2.9), Terraform(0.12.x), gcloud SDK and logged in vi
 
 8. If required, open desired ports for portainer/traefik to view dashboards.
 
+## To Do
+
+* Open ports for web
+* Option for open ports for portainer/traefik
+* Module in separate git repo
 
 ## Known Issues
 
