@@ -8,10 +8,10 @@ provider "google" {
 
 # Module will be moved to a separate repo in future.
 module "gcp_compute" {
-  source = "../modules/gcp_compute"
+  source = "git@github.com:g1212/terraform-modules.git//modules/gcp_compute?ref=master"
 
   node_count = 1
-  prefix = "gh-module-test"
+  prefix = "gh-separate-test"
   vm_size = "f1-micro"
   os = "ubuntu-os-cloud/ubuntu-1804-lts"
   gce_ssh_user = "devops"
