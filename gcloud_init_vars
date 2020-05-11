@@ -1,4 +1,5 @@
 #Var
+target_env=dev
 prefix=gh-test
 project_name=$prefix-project-1
 sa_name=$prefix-sa-1

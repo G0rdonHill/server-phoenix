@@ -42,25 +42,31 @@ create_sa(){
             echo -e "\nERROR: Could not create GCP Service Account: $sa_name"
             exit 1
         fi
+        sa_email=$(gcloud iam service-accounts list | grep $sa_name | awk '{print $2}')
+        # Grant SA Editor Role
+        status=$(gcloud projects add-iam-policy-binding $project_id \
+            --member serviceAccount:$sa_email \
+            --role roles/editor)
+        if [[ $status -ne 0 ]]; then
+            ecdcho -e "\nERROR: Could not grant SA contributor role"
+        fi
     fi
-    
     sa_email=$(gcloud iam service-accounts list | grep $sa_name | awk '{print $2}')
 
-    # Grant SA Editor Role
-    gcloud projects add-iam-policy-binding $project_id \
-        --member serviceAccount:$sa_email \
-        --role roles/editor
-
-    # Download SA key json
-    status=$(gcloud iam service-accounts keys create $out_file \
-        --iam-account="$sa_email" \
-        --key-file-type="json")
-    if [[ $status -ne 0 ]]; then
-        echo -e "\nERROR: Could not download Service Account Key"
-        exit 1
+    if [[ -f  "$(dirname $0)/terraform/${target_env}/${out_file}" ]]; then
+        echo -e "\nINFO: Key file: terraform/${target_env}/${out_file} Detected! Skipping.."
+    else
+        # Download SA key json
+        status=$(gcloud iam service-accounts keys create $out_file \
+            --iam-account="$sa_email" \
+            --key-file-type="json")
+        if [[ $status -ne 0 ]]; then
+            echo -e "\nERROR: Could not download Service Account Key"
+            exit 1
+        fi
+        # Fix this later
+        mv $out_file ./terraform/${target_env}/
     fi
-    # Fix this later
-    mv $out_file ./terraform/
 }
 
 populate_vars(){
@@ -70,7 +76,7 @@ populate_vars(){
     project_id=$(gcloud projects list | grep $project_name | awk '{print $1}')
     sed -e "s/__PROJECT__/$project_id/g" \
         -e "s~__CREDS__~$out_file~g" \
-        $(dirname $0)/terraform/variables.tmpl > $(dirname $0)/terraform/variables.tf
+        $(dirname $0)/variables.tmpl > $(dirname $0)/terraform/${target_env}/variables.tf
 }
 
 enable_apis(){
@@ -92,3 +98,5 @@ create_project
 create_sa
 populate_vars
 enable_apis
+
+echo -e "\nScript Complete. Run terrafrom init/plan/apply in terraform/${target_env} to create resources"

@@ -3,7 +3,7 @@ all:
     blue:
       ansible_host: 192.168.0.25
     gcp_test:
-      ansible_host: 35.193.154.225
+      ansible_host: 34.69.158.223
 home_group:
   hosts:
     blue:

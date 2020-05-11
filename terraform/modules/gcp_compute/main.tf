@@ -2,13 +2,6 @@
 ## https://blog.gruntwork.io/how-to-create-reusable-infrastructure-with-terraform-modules-25526d65f73d
 
 
-provider "google" {
-  credentials=file("${var.credentials}")
-  project = var.project
-  region  = var.region
-  zone    = var.zone
-  version = "~> 3.20"
-}
 
 # resource "google_compute_disk" "vm" {
 
@@ -32,7 +25,7 @@ resource "google_compute_instance" "vm" {
   count = var.node_count
 
   name         = "${var.prefix}-vm${count.index}"
-  machine_type = "f1-micro"
+  machine_type = var.vm_size
 
   boot_disk {
     initialize_params {
@@ -91,10 +84,3 @@ resource "google_compute_firewall" "allow-internal" {
   }
   source_ranges=["10.128.0.0/9"]
 }
-  # allow {
-  #   protocol = "tcp"
-  #   ports    = ["80", "8080", "1000-2000"]
-  # }
-
-  # source_tags = ["web"]
-
